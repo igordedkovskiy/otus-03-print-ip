@@ -1,3 +1,1 @@
-# otus-print-ip
-
-**Homework #3**
+# otus homework #3 - print-ip
