@@ -8,14 +8,14 @@ TEST(TEST_PRINT_IP_METHOD, process_integers)
     {
         const char c = -1;
         std::vector<short> vec;
-        for(auto it:process(c))
+        for(const auto it:process(c))
             vec.emplace_back(it);
         ASSERT_TRUE(vec[0] == 255);
     }
     {
         const short c = 0;
         std::vector<short> vec;
-        for(auto it:process(c))
+        for(const auto it:process(c))
             vec.emplace_back(it);
         ASSERT_TRUE(vec[0] == 0);
         ASSERT_TRUE(vec[1] == 0);
@@ -23,7 +23,7 @@ TEST(TEST_PRINT_IP_METHOD, process_integers)
     {
         const int c = 2130706433;
         std::vector<short> vec;
-        for(auto it:process(c))
+        for(const auto it:process(c))
             vec.emplace_back(it);
         ASSERT_TRUE(vec[0] == 0x7F);
         ASSERT_TRUE(vec[1] == 0x00);
@@ -33,7 +33,7 @@ TEST(TEST_PRINT_IP_METHOD, process_integers)
     {
         const auto c = static_cast<long>(8875824491850138409);
         std::vector<short> vec;
-        for(auto it:process(c))
+        for(const auto it:process(c))
             vec.emplace_back(it);
         // ‭7B2D4359 65708329‬
         if(sizeof(long) == 4)
@@ -60,22 +60,18 @@ TEST(TEST_PRINT_IP_METHOD, process_integers)
 TEST(TEST_PRINT_IP_METHOD, process_containers)
 {
     using print_ip_ns::print_ip_helpers::process;
+    std::vector<print_ip_ns::ip_field_t> ints {0,1,2,3,4,5,6,7,255};
+    std::vector<print_ip_ns::ip_field_t> vec;
+    for(const auto it:process(ints))
+        vec.emplace_back(it);
+    ASSERT_TRUE(vec == ints);
     {
-        std::vector<int> ints{1,2,3,4,5,6,7};
         std::vector<int> vec;
-        for(auto it:process(ints))
-            vec.emplace_back(it);
-        ASSERT_TRUE(vec == ints);
-    }
-    {
-        std::list<int> ints{1,2,3,4,5,6,7};
-        std::vector<short> vec;
-        for(auto it:process(ints))
+        for(const auto it:process(ints))
             vec.emplace_back(it);
         ASSERT_TRUE(vec.size() == ints.size());
-        std::size_t cntr = 0;
-        for(const auto it:ints)
-            ASSERT_TRUE(vec[cntr++] == it);
+        for(std::size_t cntr{0}; cntr < vec.size(); ++cntr)
+            ASSERT_TRUE(vec[cntr] == ints[cntr]);
     }
 }
 

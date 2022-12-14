@@ -68,7 +68,14 @@ struct generator {
     }
 
     // Make us an iteratable resumable_thing (Se we can be resumed in e.g., a for loop)
-    struct iterator : public std::iterator<std::input_iterator_tag, T> {
+    //struct iterator : public std::iterator<std::input_iterator_tag, T> {
+    struct iterator {
+        using iterator_category = std::input_iterator_tag;
+        using value_type = T;
+        using difference_type = T;
+        using pointer = T*;
+        using reference = T&;
+
         std::coroutine_handle<promise_type> _coroutine;
 
         iterator() = default;

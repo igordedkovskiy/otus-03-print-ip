@@ -17,10 +17,10 @@ int main()
     std::string s{"3.6.9.0.2"};
     print_ip(s);
 
-    std::vector<int> v{1,2,3,4,5,6};
+    std::vector<ip_field_t> v{1,2,3,4,5,6};
     print_ip(v);
 
-    std::list<int> l{2,4,6,7,9};
+    std::list<ip_field_t> l{2,4,6,7,9};
     print_ip(l);
 
     return 0;
